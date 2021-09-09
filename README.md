@@ -1,1 +1,7 @@
-# Swift_Programming_NOTE
+# Swift Programming NOTE 📕
+---
+
+# 목적
+  1. 언어에 대한 정확한 이해
+  2. 학습했던 내용에 대한 요약 정리
+  3. 문제해결에 필요한 명령어와 패턴 정리(알고리즘)
