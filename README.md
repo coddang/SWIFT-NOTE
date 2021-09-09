@@ -1,5 +1,4 @@
 # Swift Programming NOTE 📕
----
 
 # 목적
   1. 언어에 대한 정확한 이해
