@@ -5,6 +5,19 @@
   2. 학습했던 내용에 대한 요약 정리
   3. 문제해결에 필요한 명령어와 패턴 정리(알고리즘)
 
+<br>
+<br>
+
+## **알고 넘어갈 것** <br>
+=> 'function', 'method', 'instance'는 첫 글자를 소문자로 하는 카멜케이스 사용 <br>
+=> 'protocol', 'extension', 'struct', 'class'는 첫 글자를 대문자로 하는 카멜케이스 사용 <br>
+=> Set, Dictionary, Array 는 collection type <br>
+
+> 값 타입(Value Type): Struct, enum <br>
+> 참조 타입(Reference Type): class, closure
+
+<br>
+<br>
 
 ## **학습**
 **Class**
