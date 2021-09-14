@@ -161,3 +161,259 @@ var dictionary: [String: Int] = ["김": 100, "이": 300, "박": 200]
 <br>
 
 
+
+## **상속**
+
+### 프로퍼티(property) <br>
+    - 저장 프로퍼티: Stored property
+    - 연산 프로퍼티: Computed property
+    - 인스턴스 프로퍼티: instance property
+    - 타입 프로퍼티: type property
+
+
+
+``` swift
+
+class Person {
+    var name: String = " "
+    
+    func selfIntroduce() {
+        print("저는 \(name)입니다.")
+    }
+    
+    // final 키워드를 통해 재정의를 방지할 수 있다. -> 자식 클래스에 물려 줬을 때 재정의를 방지 override 불가!
+    final func sayHello() {
+        print("Hello")
+    }
+    
+    //타입 매써드
+    //재정의 불가 타입 메써드 - static
+    static func typeMethod() {
+        print("type method - static")
+    }
+    
+    // 재정의 가능
+    class func classMethod() {
+        print("type method - class")
+    }
+    
+    // 재정의가 가능한 class 메써드라도
+    // final 키워드를 사용하면 재정의 할 수 없다.
+    // 매써드 앞에 'static' == 'final class'
+    final class func finalClassMethod() {
+        print("type method - final class")
+    }
+}
+
+class Student: Person {
+    var major: String = ""
+    
+    override func selfIntroduce() {
+        print("저는 \(name)이고, 전공은 \(major)입니다. ")
+        // 부모 클래스의 내용을 호출
+        super.selfIntroduce()
+    }
+    
+    override class func classMethod() {
+        print("overriden type method - class")
+    }
+}
+
+
+let yang: Person = Person()
+let ming: Student = Student()
+
+yang.name = "yang"
+ming.name = "ming"
+ming.major = "Swift"
+
+yang.selfIntroduce()
+ming.selfIntroduce()
+Person.classMethod()
+Person.finalClassMethod()
+
+Student.classMethod()
+Student.typeMethod()
+Student.finalClassMethod()
+```
+
+``` swift
+
+struct ClassMate {
+    
+    // 인스턴스 저장 프로퍼티
+    var name: String = ""
+    var `class`: String = "swift"
+    var KoreanAge: Int = 0
+    
+    // 인스턴스 연산 프로퍼티
+    var westernAge: Int {
+        get {
+            return KoreanAge - 1
+        }
+        
+        set(inputValue) {
+            KoreanAge = inputValue + 1
+        }
+    }
+    
+    // 타입 저장 프로퍼티
+    static var typeDiscription: String = "학급 친구"
+    
+    // 인스턴스 매서드
+    func selfIntroduce() {
+        print("저는 \(self.class)반 \(name) 입니다.")
+    }
+    
+    // 읽기 전용 인스턴스 연산 프로퍼티 get 만 구현이 되어 있으면 읽기 전용이다.
+    var selfIntroducing: String {
+        get {
+            return "저는 \(self.class)반 \(name)이라고 합니다."
+        }
+    }
+    
+}
+
+var 명식: ClassMate = ClassMate()
+명식.KoreanAge = 25
+
+명식.name = "유명식"
+print(명식.name)
+
+print(명식.selfIntroducing)
+print("제 한국 나이는 \(명식.KoreanAge)살이고, 미국나이는 \(명식.westernAge)살 입니다.")
+
+
+```
+
+<br>
+<br>
+
+## **인스턴스의 생성 & 소멸 (init  / deinit)**
+
+## **init**
+
+**=> 모든 저장 프로퍼티에는 기본 값을 넣어야 한다. 모든 프로퍼티에 유효한 값이 할당되어야 한다는 규칙 때문이다.** <br>
+**=> 프로퍼티에 기본값을 미리 할당하면 인스턴스가 생성되면서 동시에 초기 값을 가지게 된다.** <br>
+
+``` swift
+class ClassA {
+    var className: String = "No. 1 Swift"
+    var classNickName: String = "스위프트"
+    var classSince: Int = 2015
+}
+```
+---
+
+**=> 그러나 이렇게 초기 값을 지정하는 것이 아니라 인스턴스가 초기화 되었을 때 원하는 값을 넣어주고 싶을 떄가 있을 것이다. 그럴때 init() 을 사용한다.** <br>
+
+
+``` swift
+class ClassB {
+    var className: String
+    var classNickName: String
+    var classSince: Int
+    
+    init(className: String, classNickName: String, classSince: Int) {
+        self.className = className
+        self.classNickName = classNickName
+        self.classSince = classSince
+    }
+    
+}
+
+let swiftClass1: ClassB = ClassB(className: "swift programming 1", classNickName: "SP", classSince: 2020)
+
+```
+---
+
+**=> 그러나 이렇게 했을 시 반을 설정하다보면 중간에 classNickName이 없는 반도 있을 것이기 때문에 이러한 경우엔 옵셔널 타입을 사용해준다.** <br>
+
+
+``` swift
+
+class ClassC {
+    var className: String
+    var classNickName: String?
+    var classSince: Int
+    
+//    init(className: String, classNickName: String, classSince: Int) {
+//        self.className = className
+//        self.classNickName = classNickName
+//        self.classSince = classSince
+//    }
+    
+    // 이처럼 initializer 에서 넣어줘도 되고 안넣어도 무방하다! 또는 self.init을 통해 아래 있는 init을 가져와서 중복코드를 줄일 수도 있다.
+    
+    // 자신의 인이셜라이저를 쓸 때는 앞에 convenience 를 붙여줘야 한다.
+    convenience init(className: String, classNickName: String, classSince: Int) {
+        self.init(className: className, classSince: classSince)
+        self.classNickName = classNickName
+    }
+    
+    init(className: String, classSince: Int) {
+        self.className = className
+        self.classSince = classSince
+    }
+}
+
+let swiftClass2: ClassB = ClassB(className: "swift programming 2", classNickName: "SP", classSince: 2020)
+
+let reactClass: ClassC = ClassC(className: "react programming", classSince: 2019)
+```
+---
+
+**=> 암시적 추출 옵셔널은 인스턴스 사용에 꼭 필요하지만 초기값을 할당하지 않고자 할 때 사용한다.** <br>
+
+``` swift
+
+class NewIphone {
+    var deviceName: String
+    var owner: String!
+    
+    init(deviceName: String) {
+        self.deviceName = deviceName
+    }
+    
+    func purchasePhone() {
+        print("새로운 아이폰의 이름은 \(deviceName) 이고 \(owner ?? "익명의 누군가") 님이 새로운 아이폰을 샀습니다.")
+    }
+}
+
+let iphone12pro: NewIphone = NewIphone(deviceName: "IPhone 12 Pro")
+//iphone12pro.owner = "오밀"
+iphone12pro.purchasePhone()
+
+```
+---
+
+**=> 실패 가능한 init 도 만들어 줄 수 있다.** <br>
+``` swift
+
+class PersonA {
+    var name: String
+    var age: Int
+    var nickName: String?
+    
+    init? (name: String, age: Int) {
+        if (0...120).contains(age) == false {
+            return nil
+        }
+        
+        if name.count == 0 {
+            return nil
+        }
+        
+        self.name = name
+        self.age = age
+    }
+    
+}
+
+
+let tom: PersonA? = PersonA(name: "Tom", age: 121)
+```
+
+<br>
+<br>
+
