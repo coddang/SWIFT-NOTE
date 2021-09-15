@@ -417,3 +417,106 @@ let tom: PersonA? = PersonA(name: "Tom", age: 121)
 <br>
 <br>
 
+
+## **deinit**
+
+=> deinit은 클래스의 인스턴스가 메모리에서 해제되는 시점에 호출되게 되며 인스턴스가 해제되는 시점에 해야할 일을 구현할 수 있다. <br>
+=> deinit은 class type에만 구현이 가능하다. <br>
+
+---
+
+<br>
+<br>
+<br>
+
+## **타입 케스팅(type casting)**
+**=> "as" 연산자, "is" 연산자** <br>
+=> 위프트의 타입캐스팅은 인스턴스의 타입을 확인하는 용도로 사용되거나 클래스의 인스턴스를 부모 혹은 자식 클래스의 타입으로 사용할 수 있는지 확인하는 용도로 사용된다. <br>
+=> dic를 사용할 때, Any나 AnyObject 를 사용하는 경우가 많은데, 이럴 때 타입을 확인해야 하므로 많이 사용될 수 있다. <br>
+
+``` swift
+if () is () {
+        print()
+    } else if () is () {
+        print()
+    } else if () is () {
+        print()
+    }
+}
+```
+또는
+
+``` swift
+switch () {
+case is ():
+    print()
+case is ():
+    print()
+case is ():
+    print()
+default:
+    print()
+}
+```
+
+이런 형식으로도 사용될 수 있다.
+
+<br>
+<br>
+
+---
+
+### **업 케스팅(UP casting)**
+=> as 는 is 만큼 많이 사용하지는 않는다. <br>
+=> as를 사용하여 부모클래스의 인스턴스로 사용할 수 있도록 컴파일러에게 타입정보를 전환해 준다. <br>
+=> Any, AnyObject 로도 타입 정보를 변환할 수 있다. <br>
+=> 암시적으로 처리되기 때문에 생략해도 무방  <br>
+
+<br>
+
+### **다운 캐스팅(Down casting)**
+**=> as? 또는 as! 를 사용 함으로써 자식 클래스의 인스턴스로 사용할 수 있도록 한다. 컴파일러에게 인스턴스의 타입정보를 전환해준다.** <br>
+
+=> 조건부 다운 케스팅 (as?) => 성공시 결과값이 옵셔널 타입으로 반환됨 <br>
+=> 강제 다운 케스팅 (as!) => 다운 케스팅에 실패하면 런타임 오류 위험 <br>
+
+
+---
+<br>
+<br>
+<br>
+
+
+
+## **Assert, guard 구문 (assertion, early exit)**
+**이 두 구문은 애플리케이션 동작 중 생성하게 되는 다양한 값을 동적으로 확인하고 안전하게 처리한다.**
+<br>
+
+### **Assertion**
+    - assert(_:_:file:line:) 함수를 사용하게 된다.
+    - assert 함수는 디버깅 모드에서만 동작한다. 
+    - 배포하는 앱에는 제외되며 디버깅 도중 조건의 검증을 위해서 사용된다.
+    - 어떤 조건으로 결과를 검증 할 때 사용
+    - 예상했던 조건이 맞는가? 확인
+
+
+``` swift
+
+var Age: Int = 30
+
+assert(Age == 30, "Age != 30")
+
+// age 가 30일 경우에 위 구문을 그대로 지나치게 되고 틀리게 되면 뒤에 있는 메시지를 반환하게 된다. (assertion failed error 반환)
+
+func assertionFunction(name: String?) {
+    assert(name != nil, "name == nil")
+    
+    assert((name! != "Tom") && (name! != "Jammy"), "name is Tom or Jammy")
+    print("Your name is \(name!). Hello, \(name!)")
+}
+
+
+assertionFunction(name: "Kim")
+```
+
+---
