@@ -520,3 +520,65 @@ assertionFunction(name: "Kim")
 ```
 
 ---
+
+  
+### **guard (Early Exit)**
+    - guard를 사용하여 잘못된 값의 전달 시 특정 실행 구문을 빠르게 전달합니다.
+    - guard의 else 블럭에는 특정 코드 블럭을 종료하는 지시어인 return, break 가 있어야 한다.
+    - 타입 캐스팅, 옵셔널과 자주 사용된다. 단순조건을 판단하고 종료할 때도 사용된다.
+    - guard let (조건) else () return ()
+---
+##### **예제**
+``` swift
+
+func functionwithGuard(age: Int?) {
+    guard let unwrappedAge = age,
+          unwrappedAge < 100,
+          unwrappedAge >= 0 else {
+        print("나이가 잘못 입력되었습니다.")
+        return
+    }
+    
+    // Age 가 100보다 작으면 종료하라는 구문도 작성할 수 있다.
+//    guard unwrappedAge < 100 else {
+//        return
+//    }
+    
+    
+    print("당신의 나이는 \(unwrappedAge) 세 입니다.")
+}
+```
+---
+<br>
+
+``` swift
+var count = 1
+
+while true {
+    guard count < 4 else {
+        break
+    }
+    print(count)
+    count += 1
+}
+```
+---
+<br>
+
+**딕셔너리에서도 많이 사용된다. 왜냐하면 키값을 빼오면 모두 옵셔널로 빠지기 때문에** <br>
+
+``` swift
+func someFunction(info: [String: Any]) {
+    
+    // 구문이 참이면 name에 키값을 할당하고 아니면 종료
+    guard let name = info["name"] as? String else {
+        return
+    }
+    
+    guard let age = info["age"] as? Int, age >= 0 else {
+        return
+    }
+    print("\(name): \(age)")
+}
+
+```
