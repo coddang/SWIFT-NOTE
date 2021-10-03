@@ -91,6 +91,8 @@
   33. components(separatedBy: ["1", "!", "$", "%" 등]).joined()
   34. .zip(sequence1, sequence2)
   35. .valueUpdate(Value, forKey: Key)
+  36. .flatMap
+  37. compactMap
 
 <br>
 <br>
